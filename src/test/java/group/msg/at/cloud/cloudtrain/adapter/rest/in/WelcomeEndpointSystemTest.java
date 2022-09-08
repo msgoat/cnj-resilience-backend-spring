@@ -3,11 +3,7 @@ package group.msg.at.cloud.cloudtrain.adapter.rest.in;
 import group.msg.at.cloud.common.test.rest.RestAssuredSystemTestFixture;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.junit.jupiter.api.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -32,13 +28,17 @@ public class WelcomeEndpointSystemTest {
     @BeforeAll
     public void onBeforeClass() {
         fixture.onBefore();
-        resetDownStreamASabotageState();
-        resetDownStreamBSabotageState();
     }
 
     @AfterAll
     public void onAfterClass() {
         fixture.onAfter();
+    }
+
+    @AfterEach
+    public void onAfterEach() {
+        resetDownStreamASabotageState();
+        resetDownStreamBSabotageState();
     }
 
     @Test
