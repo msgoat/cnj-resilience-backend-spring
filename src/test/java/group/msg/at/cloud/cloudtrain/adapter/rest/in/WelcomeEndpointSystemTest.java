@@ -5,9 +5,6 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import static io.restassured.RestAssured.given;
 
 /**
@@ -21,13 +18,15 @@ public class WelcomeEndpointSystemTest {
 
     private static final RestAssuredSystemTestFixture fixture = new RestAssuredSystemTestFixture();
 
-    private String downstreamASabotageEndpointUrl;
-
-    private String downstreamBSabotageEndpointUrl;
+    private TargetRouteBuilder targetRouteBuilder;
 
     @BeforeAll
     public void onBeforeClass() {
         fixture.onBefore();
+        targetRouteBuilder = new TargetRouteBuilder()
+                .withTargetRoute(RestAssured.baseURI)
+                .withLocalPortBinding("cnj-resilience-downstream-a", 31080)
+                .withLocalPortBinding("cnj-resilience-downstream-b", 32080);
     }
 
     @AfterAll
@@ -81,22 +80,11 @@ public class WelcomeEndpointSystemTest {
     }
 
     private String getDownStreamASabotageEndpointUrl() {
-        if (downstreamASabotageEndpointUrl == null) {
-            URI testTargetRoute = getTestTargetRoute();
-            String baseUrl = "http://localhost:31080";
-            String sabotageUri = "/api/v1/sabotage";
-            downstreamASabotageEndpointUrl = baseUrl + sabotageUri;
-        }
-        return downstreamASabotageEndpointUrl;
+        return targetRouteBuilder.buildFor("cnj-resilience-downstream-a") + "/api/v1/sabotage";
     }
 
     private String getDownStreamBSabotageEndpointUrl() {
-        if (downstreamBSabotageEndpointUrl == null) {
-            String baseUrl = "http://localhost:32080";
-            String sabotageUri = "/api/v1/sabotage";
-            downstreamBSabotageEndpointUrl = baseUrl + sabotageUri;
-        }
-        return downstreamBSabotageEndpointUrl;
+        return targetRouteBuilder.buildFor("cnj-resilience-downstream-b") + "/api/v1/sabotage";
     }
 
     private void resetDownStreamASabotageState() {
@@ -115,15 +103,5 @@ public class WelcomeEndpointSystemTest {
                 .get(getDownStreamBSabotageEndpointUrl())
                 .then().assertThat()
                 .statusCode(200);
-    }
-
-    private URI getTestTargetRoute() {
-        URI result = null;
-        try {
-            result = new URI(RestAssured.basePath);
-        } catch (URISyntaxException e) {
-            throw new IllegalStateException(String.format("Test target route is invalid: expected valid URI but got [%s]", RestAssured.basePath));
-        }
-        return result;
     }
 }

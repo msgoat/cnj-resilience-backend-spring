@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2022-09-09
+### Added
+### Changed
+- improved system test WelcomeEndpointSystemTest in order to verify all resilience options
+
 ## [1.0.0] - 2022-09-02
 ### Added
 ### Changed
