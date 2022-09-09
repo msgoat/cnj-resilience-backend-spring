@@ -1,11 +1,11 @@
 # cnj-resilience-backend-spring
 
 Simple cloud native java application based on Spring Boot demonstrating the application of resilience patterns 
-when calls to downstream services are failing.
+with [Resilience4J](https://resilience4j.readme.io/docs/getting-started-3) when calls to downstream services are failing.
 
 ## Status
 
-![Build status](https://drone.cloudtrain.msgoat.eu/api/badges/msgoat/cnj-resilience-backend-spring/status.svg)
+[![Build Status](https://drone.cloudtrain.aws.msgoat.eu/api/badges/msgoat/cnj-resilience-backend-spring/status.svg)](https://drone.cloudtrain.aws.msgoat.eu/msgoat/cnj-resilience-backend-spring)
 
 ## Release information
 
