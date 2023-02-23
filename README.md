@@ -5,7 +5,7 @@ with [Resilience4J](https://resilience4j.readme.io/docs/getting-started-3) when 
 
 ## Status
 
-[![Build Status](https://drone.cloudtrain.aws.msgoat.eu/api/badges/msgoat/cnj-resilience-backend-spring/status.svg)](https://drone.cloudtrain.aws.msgoat.eu/msgoat/cnj-resilience-backend-spring)
+![Build Status](https://codebuild.eu-west-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiQ2lMZzN5RFI3UzY4aENlZERzSnQ5UXdHazRpSkkxTmhFdXdQVHI5VWhydHhaL3d5ZTgyV2ZqWG5oLzJXNXd0SmNBc3NHT0x2SGc0eDVJZGZiL1I1dVR3PSIsIml2UGFyYW1ldGVyU3BlYyI6ImY3ektub2haOGh3NC81SjIiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main)
 
 ## Release information
 

@@ -34,8 +34,8 @@ public class WelcomeEndpointSystemTest {
         fixture.onAfter();
     }
 
-    @AfterEach
-    public void onAfterEach() {
+    @BeforeEach
+    public void onBeforeEach() {
         resetDownStreamASabotageState();
         resetDownStreamBSabotageState();
     }
@@ -88,18 +88,14 @@ public class WelcomeEndpointSystemTest {
     }
 
     private void resetDownStreamASabotageState() {
-        given().param("noResponse", "false")
-                .param("slowResponse", "false")
-                .param("alwaysFail", "false")
+        given().param("alwaysFail", "false")
                 .get(getDownStreamASabotageEndpointUrl())
                 .then().assertThat()
                 .statusCode(200);
     }
 
     private void resetDownStreamBSabotageState() {
-        given().param("noResponse", "false")
-                .param("slowResponse", "false")
-                .param("alwaysFail", "false")
+        given().param("alwaysFail", "false")
                 .get(getDownStreamBSabotageEndpointUrl())
                 .then().assertThat()
                 .statusCode(200);

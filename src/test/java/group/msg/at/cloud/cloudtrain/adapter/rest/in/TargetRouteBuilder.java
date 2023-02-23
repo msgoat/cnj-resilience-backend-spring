@@ -1,6 +1,6 @@
 package group.msg.at.cloud.cloudtrain.adapter.rest.in;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
