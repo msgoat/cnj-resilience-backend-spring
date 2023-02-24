@@ -61,7 +61,7 @@
         <!-- pinning versions of application type specific maven plugins -->
         <maven.spring.boot.plugin.version>${spring.boot.version}</maven.spring.boot.plugin.version>
         <!-- pinning versions of cloud native specific maven plugins -->
-        <maven.compose.plugin.version>3.0.0</maven.compose.plugin.version>
+        <maven.compose.plugin.version>4.0.0</maven.compose.plugin.version>
         <maven.docker.plugin.version>0.37.0</maven.docker.plugin.version>
         <maven.helm.plugin.version>4.0.0</maven.helm.plugin.version>
         <!-- quality assurance properties -->
