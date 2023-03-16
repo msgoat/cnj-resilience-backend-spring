@@ -31,8 +31,11 @@ phases:
     on-failure: ABORT
     commands:
       - echo "Running phase build"
-      - echo "Running commit-stage of the build using branch [${CODEBUILD_WEBHOOK_HEAD_REF:11}] and short commit hash [${CODEBUILD_RESOLVED_SOURCE_VERSION:0:8}]"
-      - mvn clean install -f pom.xml -B -ff -e -V -U -P commit-stage -Dchangelist=.${CODEBUILD_WEBHOOK_HEAD_REF:11} -Dsha1=.${CODEBUILD_RESOLVED_SOURCE_VERSION:0:8} -Dsonar.login=$SONARQUBE_TOKEN
+      - export GIT_BRANCH=${CODEBUILD_WEBHOOK_HEAD_REF:11}
+      - export MAVEN_VERSION_CHANGELIST=${GIT_BRANCH:-main}
+      - export MAVEN_VERSION_SHA1=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:8}
+      - echo "Running commit-stage of the build using branch [$MAVEN_VERSION_CHANGELIST] and short commit hash [$MAVEN_VERSION_SHA1]"
+      - mvn clean install -f pom.xml -B -ff -e -V -U -P commit-stage -Dchangelist=.$MAVEN_VERSION_CHANGELIST -Dsha1=.$MAVEN_VERSION_SHA1 -Dsonar.login=$SONARQUBE_TOKEN
       - |-
         if [ "$CLOUDTRAIN_EKS_DEPLOY_ENABLED" == "true" ]
         then
@@ -40,7 +43,7 @@ phases:
           aws eks update-kubeconfig --name $CLOUDTRAIN_EKS_CLUSTER_NAME --role $CLOUDTRAIN_EKS_ROLE_ARN
           kubectl cluster-info
           echo "Running integration-test-stage of the build"
-          mvn clean verify -f pom.xml -B -ff -e -V -U -P integration-test-stage -Dchangelist=.${CODEBUILD_WEBHOOK_HEAD_REF:11} -Dsha1=.${CODEBUILD_RESOLVED_SOURCE_VERSION:0:8}
+          mvn clean verify -f pom.xml -B -ff -e -V -U -P integration-test-stage -Dchangelist=.$MAVEN_VERSION_CHANGELIST -Dsha1=.$MAVEN_VERSION_SHA1
         fi
   post_build:
     commands:
