@@ -25,7 +25,7 @@
         <junit.version>5.9.2</junit.version>
         <restassured.version>5.2.1</restassured.version>
         <cnj.common.test.core.version>1.0.0</cnj.common.test.core.version>
-        <cnj.common.test.jakarta.version>0.1.0</cnj.common.test.jakarta.version>
+        <cnj.common.test.jakarta.version>1.0.0</cnj.common.test.jakarta.version>
         <!-- common security dependencies -->
         <common.security.version>1.2.0</common.security.version>
         <!-- common monitoring dependencies -->
