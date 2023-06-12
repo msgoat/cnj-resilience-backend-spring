@@ -1,0 +1,40 @@
+# docker-compose.yml
+# ----------------------------------------------------------------------------
+# Composes Docker containers and volumes to a runnable Spring Boot application
+# ----------------------------------------------------------------------------
+#
+---
+services:
+
+  downstream-a:
+    image: docker.cloudtrain.aws.msgoat.eu/cloudtrain/cnj-resilience-downstream-a:latest
+    ports:
+      - "31080:8080"
+    environment:
+      DOCKER_JAVA_OPTS: "-Xms1g -Xmx1g"
+
+  downstream-b:
+    image: docker.cloudtrain.aws.msgoat.eu/cloudtrain/cnj-resilience-downstream-b:latest
+    ports:
+      - "32080:8080"
+    environment:
+      DOCKER_JAVA_OPTS: "-Xms1g -Xmx1g"
+
+  backend:
+    image: docker.cloudtrain.aws.msgoat.eu/cloudtrain/cnj-resilience-backend-spring:latest
+    ports:
+      - "38080:8080"
+    environment:
+      DOCKER_JAVA_OPTS: "-Xms1g -Xmx1g"
+      CLOUDTRAIN_SERVICES_RECOMMENDATIONS_URL: http://downstream-a:8080
+      CLOUDTRAIN_SERVICES_WATCHLIST_URL: http://downstream-b:8080
+    depends_on:
+      downstream-a:
+        condition: service_started
+      downstream-b:
+        condition: service_started
+
+
+
+
+

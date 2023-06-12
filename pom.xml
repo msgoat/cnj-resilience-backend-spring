@@ -9,7 +9,7 @@
     <description>Simplest possible cloud native java backend based on Spring Boot demonstrating resilience with Resilience4J</description>
     <properties>
         <!-- new Maven version management -->
-        <revision>2.0.0</revision>
+        <revision>3.0.0</revision>
         <sha1>.12345678</sha1>
         <changelist>.LOCAL</changelist>
         <!-- common properties -->
@@ -17,19 +17,21 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- runtime related properties -->
         <java.version>17</java.version>
-        <spring.boot.version>3.0.2</spring.boot.version>
+        <spring.boot.version>3.1.0</spring.boot.version>
         <start-class>group.msg.at.cloud.cloudtrain.SpringResilienceApplication</start-class>
         <!-- common logging dependencies -->
-        <logstash.logback.encoder.version>7.2</logstash.logback.encoder.version>
+        <logstash.logback.encoder.version>7.3</logstash.logback.encoder.version>
         <!-- common test dependencies -->
         <junit.version>5.9.2</junit.version>
         <restassured.version>5.2.1</restassured.version>
-        <cnj.common.test.core.version>1.0.0</cnj.common.test.core.version>
+        <cnj.common.test.core.version>1.1.0</cnj.common.test.core.version>
         <cnj.common.test.jakarta.version>1.0.0</cnj.common.test.jakarta.version>
         <!-- common security dependencies -->
-        <common.security.version>1.2.0</common.security.version>
+        <cnj.common.security.version>2.0.0</cnj.common.security.version>
+        <!-- common rest dependencies -->
+        <cnj.common.observability.version>1.0.0</cnj.common.observability.version>
         <!-- common monitoring dependencies -->
-        <micrometer.version>1.9.1</micrometer.version>
+        <micrometer.version>1.10.3</micrometer.version>
         <!-- docker related properties -->
         <docker.registry.name>docker.cloudtrain.aws.msgoat.eu</docker.registry.name>
         <docker.organization.name>cloudtrain</docker.organization.name>
@@ -39,8 +41,8 @@
         <docker.verbose>true</docker.verbose>
         <docker.test.target.route>http://localhost:38080</docker.test.target.route>
         <!-- kubernetes related properties -->
-        <k8s.cluster.route>https://apps.cloudtrain.aws.msgoat.eu</k8s.cluster.route>
-        <k8s.cluster.namespace>default</k8s.cluster.namespace>
+        <k8s.cluster.route>https://${k8s.ingress.host}</k8s.cluster.route>
+        <k8s.cluster.namespace>cloudtrain</k8s.cluster.namespace>
         <k8s.ingress.host>apps.cloudtrain.aws.msgoat.eu</k8s.ingress.host>
         <k8s.ingress.path>/${k8s.cluster.namespace}/${project.artifactId}</k8s.ingress.path>
         <k8s.test.target.route>${k8s.cluster.route}${k8s.ingress.path}</k8s.test.target.route>
@@ -104,16 +106,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -131,7 +123,7 @@
         <dependency>
             <groupId>group.msg.at.cloud.common</groupId>
             <artifactId>cnj-common-observability-spring</artifactId>
-            <version>1.0.0</version>
+            <version>${cnj.common.observability.version}</version>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -145,8 +137,8 @@
         </dependency>
         <dependency>
             <groupId>io.github.resilience4j</groupId>
-            <artifactId>resilience4j-spring-boot2</artifactId>
-            <version>1.7.1</version>
+            <artifactId>resilience4j-spring-boot3</artifactId>
+            <version>2.0.2</version>
         </dependency>
         <!-- =========================== -->
         <!-- test time dependencies      -->
@@ -186,6 +178,12 @@
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                         <parameters>true</parameters>
+                        <showDeprecation>true</showDeprecation>
+                        <showWarnings>true</showWarnings>
+                        <compilerArgs>
+                            <arg>-Xlint</arg>
+                            <!-- <arg>-Xdoclint</arg> -->
+                        </compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -838,7 +836,6 @@
         <profile>
             <id>integration-test-stage</id>
             <properties>
-                <k8s.cluster.namespace>cloudtrain-int</k8s.cluster.namespace>
                 <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
             </properties>
             <build>

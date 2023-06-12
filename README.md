@@ -43,9 +43,40 @@ Add the following dependencies to your POM:
 </dependency>
 <dependency>
     <groupId>io.github.resilience4j</groupId>
-    <artifactId>resilience4j-spring-boot2</artifactId>
+    <artifactId>resilience4j-spring-boot3</artifactId>
     <version>${resilience4j.version}</version>
 </dependency>
 ````
 
 > __Note:__ Make sure that `spring-boot-starter-aop` is part of your POM; otherwise Resilience4J annotations will not work!
+
+
+## HOW-TO build this application locally
+
+If all prerequisites are met, just run the following Maven command in the project folder:
+
+```shell 
+mvn clean verify -P pre-commit-stage
+```
+
+Build results: a Docker image containing the showcase application.
+
+## HOW-TO run this showcase locally
+
+In order to run the whole showcase locally, just run the following docker commands in the project folder:
+
+```shell 
+docker compose up -d
+docker compose logs -f 
+```
+The showcase application will be accessible via `http://localhost:38080`.
+
+The downstream recommendation service will be accessible via `http://localhost:31080`.
+
+The downstream watchlist service will be accessible via `http://localhost:32080`.
+
+Press `Ctlr+c` to stop tailing the container logs and run the following docker command to stop the show case:
+
+```shell 
+docker compose down
+```
