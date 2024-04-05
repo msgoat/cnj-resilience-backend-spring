@@ -1,15 +1,13 @@
 package group.msg.at.cloud.cloudtrain.adapter.rest.out.watchlist;
 
-import group.msg.at.cloud.cloudtrain.adapter.rest.out.recommendations.RecommendationsClient;
-import group.msg.at.cloud.cloudtrain.core.entity.RecommendedItem;
 import group.msg.at.cloud.cloudtrain.core.entity.WatchedItem;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import jakarta.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 

@@ -6,6 +6,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] - 2024-04-05
+### Added
+- Tagging of git branch
+### Changed
+- upgraded Spring Boot to version 3.2.4
+- upgraded Java to version 21
+- upgraded Maven plugins and dependencies
+- consolidated POM with other showcases
+- consolidated system tests with other showcases
+- commit-stage builds produce Docker images for linux/amd64 and linux/arm64/v8 platforms now
+- Docker images use Generational Z garbage collector by default
+- consolidated common dependencies
+- upgraded common cloudtrain dependencies
+- Now a helm chart is packaged and pushed as an artifact during the commit-stage build
+- Now the helm chart is pulled before deploying during the integration-test-stage build
+
 ## [3.0.0] - 2023-06-11
 ### Changed
 - moved to new AWS CodeBuild pipeline

@@ -1,6 +1,7 @@
 package group.msg.at.cloud.cloudtrain.adapter.rest.in;
 
 import jakarta.validation.constraints.NotNull;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -8,8 +9,8 @@ import java.util.Map;
 
 public final class TargetRouteBuilder {
 
-    private URI parsedTargetRoute;
     private final Map<String, Integer> portsByServiceName = new HashMap<>();
+    private URI parsedTargetRoute;
 
     public TargetRouteBuilder withTargetRoute(@NotNull String targetRouteUrl) {
         if (targetRouteUrl.isEmpty()) {
